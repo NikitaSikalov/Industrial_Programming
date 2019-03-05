@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  rabbit:
+    image: "rabbitmq"
+    hostname: "rabbit"
+    ports:
+      - "8080:8000"
+    networks:
+      - task1
+
+  producer:
+    build:
+      producer
+    restart: always
+    depends_on:
+      - rabbit
+    networks:
+      - task1
+
+  consumer:
+    build:
+      consumer
+    restart: always
+    depends_on:
+      - rabbit
+    networks:
+      - task1
+
+networks:
+  task1:
+    driver: bridge
