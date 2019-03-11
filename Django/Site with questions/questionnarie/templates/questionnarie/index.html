@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Questionnaire</title>
+    <style>
+        h1 {
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        fieldset {
+            width: 300px;
+            border: dashed;
+            margin-left: 40px;
+            margin-top: 30px;
+            box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        input {
+            margin-bottom: 20px;
+            margin-top: 20px;
+            width: 200px;
+            border-radius: 15px;
+            outline: none;
+            padding: 5px;
+        }
+
+        input:focus {
+            box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.4);
+        }
+
+        button {
+            padding: 10px 15px;
+            border-radius: 15px;
+            background: #2fc5ff;
+            color: white;
+            cursor: pointer;
+            float: right;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            color: blue;
+            padding: 10px;
+        }
+
+        li span {
+            margin-left: 20px;
+            font-style: italic;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+{% if questions|length > 0 %}
+    <h1>Список вопросов</h1>
+    <ul>
+        {% for question in questions %}
+            <li>{{ question.text }} <span>{{question.name}}</span> <span>{{question.pub_date}}</span></li>
+        {% endfor %}
+    </ul>
+    <hr>
+{% else %}
+    <h1>Вопросов пока нет</h1>
+    <hr>
+{% endif %}
+<form method="POST" action="new_question">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Задайте ваш вопрос</legend>
+        <label>
+            Вопрос:
+            <input type="text" maxlength="200" name="question-field">
+        </label>
+        <br>
+        <label>
+            Ваше имя:
+            <input type="text" maxlength="200" name="name-field">
+        </label>
+        <button>Отправить</button>
+    </fieldset>
+</form>
+</body>
+</html>
